@@ -2,7 +2,6 @@ package com.salazarisaiahnoel.pacmanandroid;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.DialogInterface;
 import android.graphics.Canvas;
@@ -17,6 +16,10 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.salazarisaiahnoel.pacmanandroid.database.PacmanBD;
+import com.salazarisaiahnoel.pacmanandroid.database.Resultado;
+import com.salazarisaiahnoel.pacmanandroid.database.ResultadoDao;
 
 public class Play extends AppCompatActivity implements Runnable{
 
@@ -359,6 +362,23 @@ public class Play extends AppCompatActivity implements Runnable{
         return minutes + ":" + sec;
     }
 
+    private void saveGameResult() {
+        int totalTimeInSeconds = minutes * 60 + seconds;
+
+        String result = gameOver ? "Perdio" : "Gano";
+
+        // Creacion del objeto
+        Resultado resultado = new Resultado(0, totalTimeInSeconds, result);
+
+        PacmanBD db = PacmanBD.getDatabase(this);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                db.gameResultadoDao().insert(resultado);
+            }
+        }).start();
+    }
+
     @Override
     public void run() {
         double interval = 1000000000.0 / fps;
@@ -389,6 +409,8 @@ public class Play extends AppCompatActivity implements Runnable{
                             if (!isGameFinished){
                                 Handler h = new Handler(Looper.getMainLooper());
                                 h.post(new Runnable() {
+
+                                    // QQ
                                     @Override
                                     public void run() {
                                         seconds--;
@@ -398,6 +420,8 @@ public class Play extends AppCompatActivity implements Runnable{
                                                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialogInterface, int i) {
+                                                        //Guardado en Base Datos
+                                                        saveGameResult();
                                                         finish();
                                                     }
                                                 });
@@ -426,8 +450,11 @@ public class Play extends AppCompatActivity implements Runnable{
                                             .setTitle("Game Over!")
                                             .setMessage("Fuiste herido! Tiempo: " + setTimer())
                                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
                                                 @Override
                                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                                    // Guardado de Base Datos
+                                                    saveGameResult();
                                                     finish();
                                                 }
                                             });
