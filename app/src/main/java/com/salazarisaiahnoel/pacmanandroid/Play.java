@@ -17,6 +17,9 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.salazarisaiahnoel.pacmanandroid.database.PacmanBD;
+import com.salazarisaiahnoel.pacmanandroid.database.Resultado;
+
 public class Play extends AppCompatActivity implements Runnable{
 
     //Drawing
@@ -360,6 +363,21 @@ public class Play extends AppCompatActivity implements Runnable{
 
     // Funcion Bade de Datos
 
+    private void saveGameResult() {
+        int totalTimeInSeconds = minutes * 60 + seconds;
+        String result = gameOver ? "Perdio" : "Gano";
+
+        // Creacion del objeto
+
+        Resultado resultado = new Resultado(0, totalTimeInSeconds, result);
+        PacmanBD db = PacmanBD.getDatabase(this);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                db.gameResultadoDao().insert(resultado);
+            }
+        }).start();
+    }
 
     @Override
     public void run() {
@@ -403,7 +421,7 @@ public class Play extends AppCompatActivity implements Runnable{
                                                     @Override
                                                     public void onClick(DialogInterface dialogInterface, int i) {
                                                         //Guardado en Base Datos
-
+                                                        saveGameResult();
                                                         finish();
                                                     }
                                                 });
@@ -436,7 +454,7 @@ public class Play extends AppCompatActivity implements Runnable{
                                                 @Override
                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                     // Guardado de Base Datos
-
+                                                    saveGameResult();
                                                     finish();
                                                 }
                                             });
