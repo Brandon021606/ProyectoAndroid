@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         Button about = findViewById(R.id.btnAbout);
         Button exit = findViewById(R.id.btnExit);
 
+        //BOTON PLAY ACTIVITY_MAIN.XML
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,10 +48,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //BOTON EXIT ACTIVITY_MAIN.XML
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        //BOTON ABOUT ACTIVITY_MAIN.XML
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(intent);
             }
         });
     }

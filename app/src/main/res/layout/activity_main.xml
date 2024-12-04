@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@drawable/button_normal"
-            android:text="Informacion"
+            android:text="Google Maps"
             android:textColor="@color/white" />
 
         <androidx.appcompat.widget.AppCompatButton
