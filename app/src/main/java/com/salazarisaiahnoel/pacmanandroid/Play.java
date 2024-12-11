@@ -309,6 +309,7 @@ public class Play extends AppCompatActivity implements Runnable{
         return false;
     }
 
+    // DISEÑO DE MAPA
     void drawMap(Canvas canvas){
         Paint paint = new Paint();
 

@@ -45,6 +45,7 @@ public class Pacman {
         }
     }
 
+    // PUNTAJE Pac-Man
     private void consumePellet(int x, int y) {
         int col = x / cellSizeCol;
         int row = y / cellSizeRow;
