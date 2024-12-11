@@ -14,7 +14,7 @@ public class Pacman {
     int speed;
     MediaPlayer mp;
 
-    public Pacman(Context context, int[][] map, int cellSizeRow, int cellSizeCol, int speed){
+    public Pacman(Context context, int[][] map, int cellSizeRow, int cellSizeCol, int speed) {
         this.context = context;
         this.map = map;
         this.cellSizeRow = cellSizeRow;
@@ -38,7 +38,7 @@ public class Pacman {
         int newX = posX + dx;
         int newY = posY + dy;
 
-        if (isValidMove(newX, newY) && isValidMove(newX + cellSizeCol - 1, newY + cellSizeRow - 1) && isValidMove(newX, newY + cellSizeRow - 1) && isValidMove(newX + cellSizeCol - 1, newY)){
+        if (isValidMove(newX, newY) && isValidMove(newX + cellSizeCol - 1, newY + cellSizeRow - 1) && isValidMove(newX, newY + cellSizeRow - 1) && isValidMove(newX + cellSizeCol - 1, newY)) {
             posX = newX;
             posY = newY;
             consumePellet(newX + cellSizeCol / 2, newY + cellSizeRow / 2);
@@ -56,7 +56,7 @@ public class Pacman {
         }
     }
 
-    boolean isValidMove(int newX, int newY){
+    boolean isValidMove(int newX, int newY) {
         if (newX >= 0 && newX < map[0].length * cellSizeCol && newY >= 0 && newY < map.length * cellSizeRow) {
             int col = newX / cellSizeCol;
             int row = newY / cellSizeRow;
